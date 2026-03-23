@@ -1,0 +1,20 @@
+{
+  "name": "lab5",
+  "version": "1.0.0",
+  "description": "Solar System Project",
+  "main": "index.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^5.0.1",
+    "express": "^5.2.1",
+    "node-fetch": "^3.3.2",
+    "npm-solarsystem": "^1.1.5"
+    
+  }
+}

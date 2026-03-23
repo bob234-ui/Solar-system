@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head.ejs') %>
+</head>
+<body>
+    <h1 class="bg-info text-white p-3 m-0 page-title">The Solar System</h1>
+    <%- include('partials/nav.ejs') %>
+
+    <main>
+        <div class="container">
+            <div class="row content-row g-4">
+                <div class="col-md-6">
+                    <div class="content-card info-list">
+                        <h2 class="text-center mb-4">Comets</h2>
+                        <p><strong>Definition:</strong> <%= planetInfo.def %></p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="content-card">
+                        <img class="space-image" src="<%= planetInfo.image %>" alt="Comets">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer.ejs') %>
+</body>
+</html>
