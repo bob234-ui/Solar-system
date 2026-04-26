@@ -1,0 +1,50 @@
+<%- include('partials/header', { title: 'Home', page: 'home' }) %>
+<div class="container">
+  <div class="hero">
+    <h1>Rick & Morty Explorer</h1>
+    <p class="mood">"<%= mood %>"</p>
+    <p class="fun-fact"><%= funFact %></p>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="num"><%= stats.characters.toLocaleString() %></span>
+      <div class="label">Characters</div>
+    </div>
+    <div class="stat-card">
+      <span class="num"><%= stats.episodes.toLocaleString() %></span>
+      <div class="label">Episodes</div>
+    </div>
+    <div class="stat-card">
+      <span class="num"><%= stats.locations.toLocaleString() %></span>
+      <div class="label">Locations</div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Explore the Multiverse</h2>
+  </div>
+
+  <div class="nav-cards">
+    <a href="<%= basePath %>/characters" class="nav-card">
+      <div class="icon">👤</div>
+      <h3>Characters</h3>
+      <p>Browse all <%= stats.characters %> characters from every dimension</p>
+    </a>
+    <a href="<%= basePath %>/episodes" class="nav-card">
+      <div class="icon">📺</div>
+      <h3>Episodes</h3>
+      <p>Explore all <%= stats.episodes %> episodes with fan ratings</p>
+    </a>
+    <a href="<%= basePath %>/locations" class="nav-card">
+      <div class="icon">🌍</div>
+      <h3>Locations</h3>
+      <p>Discover <%= stats.locations %> locations across the universe</p>
+    </a>
+  </div>
+
+  <div style="text-align:center;margin-top:1rem;">
+    <a href="<%= basePath %>/random" class="btn" style="font-size:1rem;padding:12px 32px;">🎲 Surprise Me — Random Character</a>
+  </div>
+</div>
+<%- include('partials/footer') %>

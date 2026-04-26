@@ -1,0 +1,57 @@
+<%- include('partials/header', { title: 'Characters', page: 'characters' }) %>
+<div class="container">
+  <h1 class="page-title">👤 Characters</h1>
+
+  <form class="filters" action="<%= basePath %>/characters" method="GET">
+    <div class="filter-group">
+      <label>Name</label>
+      <input type="text" name="name" value="<%= name %>" placeholder="Search name..." />
+    </div>
+    <div class="filter-group">
+      <label>Status</label>
+      <select name="status">
+        <option value="">All</option>
+        <option value="alive" <%= status === 'alive' ? 'selected' : '' %>>Alive</option>
+        <option value="dead" <%= status === 'dead' ? 'selected' : '' %>>Dead</option>
+        <option value="unknown" <%= status === 'unknown' ? 'selected' : '' %>>Unknown</option>
+      </select>
+    </div>
+    <button type="submit" class="btn">Filter</button>
+    <a href="<%= basePath %>/characters" class="btn btn-outline">Reset</a>
+  </form>
+
+  <% if (characters.length === 0) { %>
+    <p style="color:var(--muted);text-align:center;padding:3rem;">No characters found in this dimension.</p>
+  <% } else { %>
+    <div class="char-grid">
+      <% characters.forEach(c => { %>
+        <a href="<%= basePath %>/characters/<%= c.id %>" class="char-card">
+          <img src="<%= c.image %>" alt="<%= c.name %>" loading="lazy" />
+          <div class="info">
+            <div class="name"><%= c.name %></div>
+            <div class="meta">
+              <span>
+                <span class="status-dot status-<%= c.status.toLowerCase() %>"></span>
+                <%= c.status %>
+              </span>
+              <span><%= c.species %></span>
+            </div>
+            <div class="dim-rating">⭐ Dim. Rating: <%= c.dimensionRating %>/100</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-top:2px;font-style:italic"><%= c.quirk %></div>
+          </div>
+        </a>
+      <% }) %>
+    </div>
+
+    <div class="pagination">
+      <% if (page > 1) { %>
+        <a href="<%= basePath %>/characters?page=<%= page-1 %>&status=<%= status %>&name=<%= name %>" class="btn btn-outline">← Prev</a>
+      <% } %>
+      <span>Page <%= page %> of <%= info.pages %></span>
+      <% if (page < info.pages) { %>
+        <a href="<%= basePath %>/characters?page=<%= page+1 %>&status=<%= status %>&name=<%= name %>" class="btn btn-outline">Next →</a>
+      <% } %>
+    </div>
+  <% } %>
+</div>
+<%- include('partials/footer') %>

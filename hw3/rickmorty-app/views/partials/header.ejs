@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %> | Rick & Morty Explorer</title>
+  <link rel="stylesheet" href="<%= basePath %>/css/style.css" />
+</head>
+<body>
+  <nav>
+    <a href="<%= basePath %>/" class="logo">⚗️ R&M Explorer</a>
+    <a href="<%= basePath %>/characters" class="<%= page === 'characters' ? 'active' : '' %>">Characters</a>
+    <a href="<%= basePath %>/episodes" class="<%= page === 'episodes' ? 'active' : '' %>">Episodes</a>
+    <a href="<%= basePath %>/locations" class="<%= page === 'locations' ? 'active' : '' %>">Locations</a>
+    <a href="<%= basePath %>/random" class="random-btn">🎲 Random</a>
+  </nav>

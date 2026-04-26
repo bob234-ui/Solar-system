@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quotes App</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <h1>Quotes Search</h1>
+
+  <div class="search-row">
+
+    <div class="search-box">
+      <h3>Search by Keyword</h3>
+      <form method="GET" action="/">
+        <input type="hidden" name="searchType" value="keyword">
+        <input type="text" name="keyword" placeholder="Enter keyword">
+        <button type="submit">Search</button>
+      </form>
+
+      <% if (searchType === "keyword") { %>
+        <% if (error) { %>
+          <p class="error"><%= error %></p>
+        <% } %>
+
+        <div class="results-box">
+          <h4>Keyword Results</h4>
+          <% if (quotes.length === 0 && !error) { %>
+            <p>No quotes found.</p>
+          <% } %>
+
+          <% quotes.forEach(q => { %>
+            <div class="card">
+              <p><%= q.quote %></p>
+              <p>
+                <a href="#" onclick="showAuthor(<%= q.authorId %>)">
+                  <%= q.firstName %> <%= q.lastName %>
+                </a>
+              </p>
+              <p>Category: <%= q.category %></p>
+              <p>Likes: <%= q.likes %></p>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+
+    <div class="search-box">
+      <h3>Search by Category</h3>
+      <form method="GET" action="/">
+        <input type="hidden" name="searchType" value="category">
+        <select name="category">
+          <option value="">Select Category</option>
+          <% categories.forEach(c => { %>
+            <option value="<%= c.category %>"><%= c.category %></option>
+          <% }) %>
+        </select>
+        <button type="submit">Search</button>
+      </form>
+
+      <% if (searchType === "category") { %>
+        <div class="results-box">
+          <h4>Category Results</h4>
+          <% if (quotes.length === 0) { %>
+            <p>No quotes found.</p>
+          <% } %>
+
+          <% quotes.forEach(q => { %>
+            <div class="card">
+              <p><%= q.quote %></p>
+              <p>
+                <a href="#" onclick="showAuthor(<%= q.authorId %>)">
+                  <%= q.firstName %> <%= q.lastName %>
+                </a>
+              </p>
+              <p>Category: <%= q.category %></p>
+              <p>Likes: <%= q.likes %></p>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+
+    <div class="search-box">
+      <h3>Search by Author</h3>
+      <form method="GET" action="/">
+        <input type="hidden" name="searchType" value="author">
+        <select name="author">
+          <option value="">Select Author</option>
+          <% authors.forEach(a => { %>
+            <option value="<%= a.authorId %>"><%= a.firstName %> <%= a.lastName %></option>
+          <% }) %>
+        </select>
+        <button type="submit">Search</button>
+      </form>
+
+      <% if (searchType === "author") { %>
+        <div class="results-box">
+          <h4>Author Results</h4>
+          <% if (quotes.length === 0) { %>
+            <p>No quotes found.</p>
+          <% } %>
+
+          <% quotes.forEach(q => { %>
+            <div class="card">
+              <p><%= q.quote %></p>
+              <p>
+                <a href="#" onclick="showAuthor(<%= q.authorId %>)">
+                  <%= q.firstName %> <%= q.lastName %>
+                </a>
+              </p>
+              <p>Category: <%= q.category %></p>
+              <p>Likes: <%= q.likes %></p>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+
+    <div class="search-box">
+      <h3>Search by Likes</h3>
+      <form method="GET" action="/">
+        <input type="hidden" name="searchType" value="likes">
+        <input type="number" name="minLikes" placeholder="Min Likes">
+        <input type="number" name="maxLikes" placeholder="Max Likes">
+        <button type="submit">Search</button>
+      </form>
+
+      <% if (searchType === "likes") { %>
+        <div class="results-box">
+          <h4>Likes Results</h4>
+          <% if (quotes.length === 0) { %>
+            <p>No quotes found.</p>
+          <% } %>
+
+          <% quotes.forEach(q => { %>
+            <div class="card">
+              <p><%= q.quote %></p>
+              <p>
+                <a href="#" onclick="showAuthor(<%= q.authorId %>)">
+                  <%= q.firstName %> <%= q.lastName %>
+                </a>
+              </p>
+              <p>Category: <%= q.category %></p>
+              <p>Likes: <%= q.likes %></p>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+
+    <div class="search-box">
+      <h3>Female Authors</h3>
+      <form method="GET" action="/">
+        <input type="hidden" name="searchType" value="female">
+        <button type="submit">Show Female Authors</button>
+      </form>
+
+      <% if (searchType === "female") { %>
+        <div class="results-box">
+          <h4>Female Author Quotes</h4>
+          <% if (quotes.length === 0) { %>
+            <p>No quotes found.</p>
+          <% } %>
+
+          <% quotes.forEach(q => { %>
+            <div class="card">
+              <p><%= q.quote %></p>
+              <p>
+                <a href="#" onclick="showAuthor(<%= q.authorId %>)">
+                  <%= q.firstName %> <%= q.lastName %>
+                </a>
+              </p>
+              <p>Category: <%= q.category %></p>
+              <p>Likes: <%= q.likes %></p>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+
+  <script>
+    function showAuthor(id) {
+      fetch("/author/" + id)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("modalContent").innerHTML = `
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>${data.firstName} ${data.lastName}</h2>
+            <img src="${data.portrait}" alt="Author Portrait" width="120">
+            <p><strong>Born:</strong> ${data.dob || "N/A"}</p>
+            <p><strong>Died:</strong> ${data.dod || "N/A"}</p>
+            <p><strong>Profession:</strong> ${data.profession || "N/A"}</p>
+            <p><strong>Country:</strong> ${data.country || "N/A"}</p>
+            <p><strong>Biography:</strong> ${data.biography || "N/A"}</p>
+          `;
+          document.getElementById("modal").style.display = "block";
+        });
+    }
+
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    window.onclick = function(e) {
+      if (e.target === document.getElementById("modal")) {
+        closeModal();
+      }
+    }
+  </script>
+
+</body>
+</html>

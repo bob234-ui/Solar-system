@@ -1,0 +1,28 @@
+<%- include('partials/header', { title: 'Episodes', page: 'episodes' }) %>
+<div class="container">
+  <h1 class="page-title">📺 Episodes</h1>
+
+  <div class="ep-grid">
+    <% episodes.forEach(ep => { %>
+      <div class="ep-card">
+        <div class="ep-code"><%= ep.episode %></div>
+        <div class="ep-name"><%= ep.name %></div>
+        <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem;">📅 <%= ep.air_date %></div>
+        <div class="ep-rating">⭐ <%= ep.rating %> / 10 <span style="color:var(--muted);font-size:0.75rem;">(fan generated)</span></div>
+        <div class="ep-review"><%= ep.reviewSnippet %></div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.5rem;"><%= ep.characters.length %> characters appear</div>
+      </div>
+    <% }) %>
+  </div>
+
+  <div class="pagination">
+    <% if (page > 1) { %>
+      <a href="<%= basePath %>/episodes?page=<%= page-1 %>" class="btn btn-outline">← Prev</a>
+    <% } %>
+    <span>Page <%= page %> of <%= info.pages %></span>
+    <% if (page < info.pages) { %>
+      <a href="<%= basePath %>/episodes?page=<%= page+1 %>" class="btn btn-outline">Next →</a>
+    <% } %>
+  </div>
+</div>
+<%- include('partials/footer') %>

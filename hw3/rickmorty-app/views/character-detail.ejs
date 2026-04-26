@@ -1,0 +1,44 @@
+<%- include('partials/header', { title: character.name, page: 'characters' }) %>
+<div class="container">
+  <a href="<%= basePath %>/characters" class="back">← Back to Characters</a>
+
+  <div class="detail-layout">
+    <div>
+      <img src="<%= character.image %>" alt="<%= character.name %>" class="detail-img" />
+    </div>
+    <div class="detail-info">
+      <h1><%= character.name %></h1>
+
+      <div class="detail-badges">
+        <span class="badge badge-green">
+          <span class="status-dot status-<%= character.status.toLowerCase() %>"></span>
+          <%= character.status %>
+        </span>
+        <span class="badge badge-teal"><%= character.species %></span>
+        <% if (character.type) { %>
+          <span class="badge badge-muted"><%= character.type %></span>
+        <% } %>
+        <span class="badge badge-muted"><%= character.gender %></span>
+      </div>
+
+      <div class="backstory-box">🧪 <%= backstory %></div>
+
+      <table class="info-table">
+        <tr><td>Origin</td><td><%= character.origin.name %></td></tr>
+        <tr><td>Last Location</td><td><%= character.location.name %></td></tr>
+        <tr><td>Created</td><td><%= new Date(character.created).toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'}) %></td></tr>
+        <tr><td>Appears In</td><td><%= character.episode.length %> episode(s)</td></tr>
+      </table>
+
+      <div style="margin-top:1.5rem;">
+        <div style="color:var(--muted);font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:0.75rem;">Featured Episodes</div>
+        <div class="ep-mini-list">
+          <% episodes.forEach(ep => { %>
+            <span class="ep-mini"><%= ep.episode %> · <%= ep.name %></span>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('partials/footer') %>

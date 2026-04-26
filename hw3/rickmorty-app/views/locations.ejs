@@ -1,0 +1,33 @@
+<%- include('partials/header', { title: 'Locations', page: 'locations' }) %>
+<div class="container">
+  <h1 class="page-title">🌍 Locations</h1>
+
+  <div class="loc-grid">
+    <% locations.forEach(loc => { %>
+      <div class="loc-card">
+        <div class="loc-name"><%= loc.name %></div>
+        <div class="loc-type"><%= loc.type || 'Unknown Type' %></div>
+        <div class="loc-meta">
+          <span>🌐 Dimension: <%= loc.dimension || 'Unknown' %></span>
+          <span>👥 Est. Population: <%= loc.population %></span>
+          <span>🏠 Residents: <%= loc.residents.length %></span>
+        </div>
+        <span
+          class="threat-badge"
+          style="background-color:<%= loc.dangerColor[loc.threatLevel] %>"
+        >⚠️ <%= loc.threatLevel %> Threat</span>
+      </div>
+    <% }) %>
+  </div>
+
+  <div class="pagination">
+    <% if (page > 1) { %>
+      <a href="<%= basePath %>/locations?page=<%= page-1 %>" class="btn btn-outline">← Prev</a>
+    <% } %>
+    <span>Page <%= page %> of <%= info.pages %></span>
+    <% if (page < info.pages) { %>
+      <a href="<%= basePath %>/locations?page=<%= page+1 %>" class="btn btn-outline">Next →</a>
+    <% } %>
+  </div>
+</div>
+<%- include('partials/footer') %>
